@@ -7,25 +7,28 @@
     <title>Rostin Maafi - Developer Portfolio</title>
 
     <!-- External Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
     <!-- Custom Styles -->
     <style>
-        /* Root Variables for Theming */
+        /* Root Variables */
         :root {
-            --bg-color: #0a0a0a;
-            --text-color: #e0e0e0;
-            --accent-color: #00ff99;
-            --secondary-bg: #1a1a1a;
+            --bg-color: #0a192f;
+            --text-color: #ccd6f6;
+            --accent-color: #64ffda;
+            --secondary-bg: #112240;
+            --highlight-color: #e6f1ff;
+            --font-main: 'Roboto', sans-serif;
+            --font-mono: 'Fira Code', monospace;
         }
 
         /* Global Styles */
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: var(--font-main);
             background-color: var(--bg-color);
             color: var(--text-color);
             overflow-x: hidden;
@@ -35,27 +38,27 @@
 
         /* Custom Cursor */
         #cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent-color);
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: background-color 0.2s ease;
         }
 
         #cursor-blur {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(0, 255, 153, 0.1);
+            width: 80px;
+            height: 80px;
+            background-color: var(--accent-color);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 9998;
             transform: translate(-50%, -50%);
-            transition: transform 0.2s ease, background-color 0.2s ease;
+            filter: blur(40px);
+            opacity: 0.2;
         }
 
         /* Canvas Container */
@@ -68,24 +71,23 @@
             z-index: -1;
         }
 
-        /* Navigation Bar */
+        /* Navigation */
         nav {
             position: fixed;
-            top: 0;
             width: 100%;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(10, 10, 10, 0.8);
+            background-color: rgba(10, 25, 47, 0.85);
             backdrop-filter: blur(10px);
             z-index: 1000;
         }
 
         nav .logo {
             font-size: 1.5rem;
+            font-family: var(--font-mono);
             color: var(--accent-color);
-            font-weight: bold;
             text-decoration: none;
         }
 
@@ -93,164 +95,163 @@
             list-style: none;
             display: flex;
             gap: 2rem;
-            margin: 0;
         }
 
         nav ul li a {
             color: var(--text-color);
             text-decoration: none;
             font-size: 1rem;
+            position: relative;
             transition: color 0.3s ease;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background-color: var(--accent-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
         }
 
         nav ul li a:hover {
             color: var(--accent-color);
         }
 
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
         /* Header Section */
         header {
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding-left: 10%;
-            position: relative;
+            align-items: center;
+            padding: 0 10%;
         }
 
         header .content {
-            max-width: 600px;
+            max-width: 800px;
         }
 
         header h1 {
-            font-size: 4rem;
+            font-size: 3rem;
             margin: 0;
             line-height: 1.2;
+            color: var(--highlight-color);
         }
 
-        header .highlight {
+        header h1 .highlight {
             color: var(--accent-color);
         }
 
-        header .subtitle {
-            font-size: 1.5rem;
+        header p {
+            font-size: 1.2rem;
             margin-top: 1rem;
-            color: #aaaaaa;
+            color: var(--text-color);
         }
 
-        header .cta-button {
+        .cta-button {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--accent-color);
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            font-family: var(--font-mono);
+        }
+
+        .cta-button:hover {
             background-color: var(--accent-color);
             color: var(--bg-color);
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: none;
-            margin-top: 2rem;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        header .cta-button:hover {
-            transform: scale(1.05);
-            background-color: #00cc7a;
         }
 
         /* Sections */
         .section {
-            padding: 6rem 2rem;
+            padding: 4rem 10%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .section:nth-child(even) {
-            background-color: var(--secondary-bg);
-        }
-
-        h2 {
-            font-size: 2.5rem;
+        .section h2 {
+            font-size: 2rem;
             margin-bottom: 2rem;
-            color: var(--accent-color);
+            color: var(--highlight-color);
             position: relative;
         }
 
-        h2::after {
+        .section h2::before {
             content: '';
             position: absolute;
             width: 50px;
-            height: 3px;
+            height: 2px;
             background-color: var(--accent-color);
-            left: 0;
             bottom: -10px;
+            left: 0;
         }
 
-        .skills-grid, .projects-grid {
+        .section p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        /* Skills Section */
+        .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        /* Skill Item */
         .skill-item {
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 15px;
+            background-color: var(--secondary-bg);
+            padding: 1rem;
+            border-radius: 5px;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-item::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: linear-gradient(45deg, transparent, rgba(0, 255, 153, 0.2), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
         }
 
         .skill-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 255, 153, 0.2);
         }
 
-        .skill-item:hover::before {
-            top: 0;
-            left: 0;
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
-        /* Project Card */
         .project-card {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: var(--secondary-bg);
             padding: 1.5rem;
-            border-radius: 15px;
-            text-align: center;
+            border-radius: 5px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .project-card::before {
             content: '';
             position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: linear-gradient(45deg, transparent, rgba(0, 255, 153, 0.2), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 255, 153, 0.2);
-        }
-
-        .project-card:hover::before {
+            width: 100%;
+            height: 5px;
+            background-color: var(--accent-color);
             top: 0;
             left: 0;
         }
@@ -258,162 +259,98 @@
         .project-image {
             width: 100%;
             height: 200px;
-            background-color: #004a7c;
+            background-color: #233554;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 3rem;
             color: var(--accent-color);
-            border-radius: 10px;
+            border-radius: 5px;
             margin-bottom: 1rem;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image::after {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: linear-gradient(45deg, transparent, rgba(0, 255, 153, 0.2), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-        }
-
-        .project-card:hover .project-image::after {
-            top: 0;
-            left: 0;
+            font-size: 3rem;
         }
 
         .project-title {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             margin: 0 0 0.5rem 0;
+            color: var(--highlight-color);
         }
 
         .project-description {
-            font-size: 0.9rem;
+            font-size: 1rem;
             margin-bottom: 1rem;
-            color: #cccccc;
+            color: var(--text-color);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
         }
 
         .project-link {
             color: var(--accent-color);
             text-decoration: none;
-            font-weight: bold;
+            font-family: var(--font-mono);
             transition: color 0.3s ease;
         }
 
         .project-link:hover {
-            color: #00cc7a;
-        }
-
-        /* Contact Section */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border: none;
-            border-radius: 5px;
-            background-color: #1a1a1a;
-            color: var(--text-color);
-            font-size: 1rem;
-        }
-
-        .contact-form button {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .contact-form button:hover {
-            transform: scale(1.05);
-            background-color: #00cc7a;
+            color: var(--highlight-color);
         }
 
         /* Footer */
         footer {
-            background-color: var(--secondary-bg);
-            padding: 2rem;
             text-align: center;
-        }
-
-        footer p {
-            color: #aaaaaa;
+            padding: 2rem;
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
             font-size: 0.9rem;
+            font-family: var(--font-mono);
         }
 
         /* Media Queries */
         @media (max-width: 768px) {
             header {
-                padding-left: 2rem;
+                padding: 0 2rem;
+            }
+
+            .section {
+                padding: 4rem 2rem;
             }
 
             nav ul {
                 display: none;
             }
 
-            nav .menu-toggle {
+            .menu-toggle {
                 display: block;
+                font-size: 1.5rem;
                 cursor: pointer;
+                color: var(--accent-color);
             }
 
-            nav .menu-toggle div {
-                width: 25px;
-                height: 3px;
-                background-color: var(--text-color);
-                margin: 5px 0;
-                transition: all 0.3s ease;
-            }
-
-            /* Mobile Menu */
-            .mobile-menu {
+            .mobile-nav {
+                display: none;
                 position: fixed;
                 top: 0;
-                right: -100%;
-                width: 70%;
+                right: 0;
+                width: 60%;
                 height: 100%;
                 background-color: var(--bg-color);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                transition: right 0.3s ease;
+                padding: 2rem;
                 z-index: 999;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2rem;
             }
 
-            .mobile-menu ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                text-align: center;
+            .mobile-nav.open {
+                display: flex;
             }
 
-            .mobile-menu ul li {
-                margin: 1.5rem 0;
-            }
-
-            .mobile-menu ul li a {
+            .mobile-nav a {
                 color: var(--text-color);
-                font-size: 1.5rem;
                 text-decoration: none;
-            }
-
-            .mobile-menu.open {
-                right: 0;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -423,174 +360,108 @@
     <div id="cursor"></div>
     <div id="cursor-blur"></div>
 
-    <!-- Background Animation -->
+    <!-- Canvas Container for Three.js Background -->
     <div id="canvas-container"></div>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation -->
     <nav>
         <a href="#" class="logo">RM</a>
-        <div class="menu-toggle">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+        <div class="menu-toggle"><i class="fas fa-bars"></i></div>
         <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <!-- Add more navigation links if needed -->
         </ul>
-    </nav>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu">
-        <ul>
-            <li><a href="#about" onclick="closeMenu()">About</a></li>
-            <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
-            <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
-            <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
-        </ul>
-    </div>
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <!-- Add more navigation links if needed -->
+        </div>
+    </nav>
 
     <!-- Header Section -->
     <header>
-        <div class="content" data-aos="fade-right">
+        <div class="content">
             <h1>Hi, I'm <span class="highlight">Rostin Maafi</span></h1>
-            <p class="subtitle">Computer Science Student & Aspiring Developer</p>
+            <p>Computer Science Student &amp; Aspiring Developer</p>
             <a href="#projects" class="cta-button">Explore My Work</a>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section class="section" id="about">
-        <div class="container" data-aos="fade-up">
+    <!-- Main Content -->
+    <main>
+        <!-- About Section -->
+        <section class="section" id="about">
             <h2>About Me</h2>
             <p>I'm a passionate computer science student at Queen's University, constantly exploring new technologies and pushing the boundaries of what's possible in the digital realm. With a keen interest in AI, machine learning, and web development, I'm always eager to take on new challenges and create innovative solutions.</p>
-        </div>
-    </section>
+        </section>
 
-    <!-- Skills Section -->
-    <section class="section" id="skills">
-        <div class="container" data-aos="fade-up">
+        <!-- Skills Section -->
+        <section class="section" id="skills">
             <h2>Skills</h2>
             <div class="skills-grid">
-                <div class="skill-item" data-aos="flip-left">Python</div>
-                <div class="skill-item" data-aos="flip-right">Java</div>
-                <div class="skill-item" data-aos="flip-left">C++</div>
-                <div class="skill-item" data-aos="flip-right">JavaScript</div>
-                <div class="skill-item" data-aos="flip-left">React</div>
-                <div class="skill-item" data-aos="flip-right">Node.js</div>
-                <div class="skill-item" data-aos="flip-left">SQL</div>
-                <div class="skill-item" data-aos="flip-right">Git</div>
+                <div class="skill-item">Python</div>
+                <div class="skill-item">Java</div>
+                <div class="skill-item">C++</div>
+                <div class="skill-item">JavaScript</div>
+                <div class="skill-item">React</div>
+                <div class="skill-item">Node.js</div>
+                <div class="skill-item">SQL</div>
+                <div class="skill-item">Git</div>
+                <!-- Add more skills as needed -->
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects Section -->
-    <section class="section" id="projects">
-        <div class="container" data-aos="fade-up">
+        <!-- Projects Section -->
+        <section class="section" id="projects">
             <h2>Projects</h2>
             <div class="projects-grid">
-                <div class="project-card" data-aos="zoom-in">
-                    <div class="project-image" style="background-image: url('your-image-url1.jpg');"></div>
+                <div class="project-card">
+                    <div class="project-image"><i class="fas fa-robot"></i></div>
                     <h3 class="project-title">AI Chatbot</h3>
                     <p class="project-description">An intelligent chatbot powered by machine learning algorithms.</p>
-                    <a href="#" class="project-link">Learn More</a>
+                    <div class="project-links">
+                        <a href="#" class="project-link">View Project</a>
+                        <a href="#" class="project-link">GitHub Repo</a>
+                    </div>
                 </div>
-                <div class="project-card" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="project-image" style="background-image: url('your-image-url2.jpg');"></div>
+                <div class="project-card">
+                    <div class="project-image"><i class="fas fa-shopping-cart"></i></div>
                     <h3 class="project-title">E-commerce Platform</h3>
                     <p class="project-description">A full-stack web application for online shopping experiences.</p>
-                    <a href="#" class="project-link">Learn More</a>
+                    <div class="project-links">
+                        <a href="#" class="project-link">View Project</a>
+                        <a href="#" class="project-link">GitHub Repo</a>
+                    </div>
                 </div>
-                <div class="project-card" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="project-image" style="background-image: url('your-image-url3.jpg');"></div>
+                <div class="project-card">
+                    <div class="project-image"><i class="fas fa-mobile-alt"></i></div>
                     <h3 class="project-title">Mobile Fitness Tracker</h3>
                     <p class="project-description">An iOS app for tracking workouts and health metrics.</p>
-                    <a href="#" class="project-link">Learn More</a>
+                    <div class="project-links">
+                        <a href="#" class="project-link">View Project</a>
+                        <a href="#" class="project-link">GitHub Repo</a>
+                    </div>
                 </div>
+                <!-- Add more projects as needed -->
             </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="section" id="contact">
-        <div class="container" data-aos="fade-up">
-            <h2>Contact Me</h2>
-            <p>If you're interested in collaborating or just want to say hi, feel free to drop a message!</p>
-            <div class="contact-form">
-                <form action="https://formspree.io/f/your-form-id" method="POST">
-                    <input type="text" name="name" placeholder="Your Name" required />
-                    <input type="email" name="_replyto" placeholder="Your Email" required />
-                    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                    <button type="submit">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2023 Rostin Maafi. All rights reserved.</p>
+        &copy; 2023 Rostin Maafi. All Rights Reserved.
     </footer>
 
     <!-- External Scripts -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-    <!-- Custom Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 1000,
-            once: true,
-        });
-
-        // Three.js Background Animation
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        // Create Particles
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCnt = 20000;
-        const posArray = new Float32Array(particlesCnt * 3);
-        for (let i = 0; i < particlesCnt * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 100;
-        }
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.1,
-            color: 0x00ff99,
-            blending: THREE.AdditiveBlending,
-            transparent: true,
-            opacity: 0.5,
-        });
-
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
-
-        camera.position.z = 30;
-
-        // Animation
-        function animate() {
-            requestAnimationFrame(animate);
-            particlesMesh.rotation.x += 0.0005;
-            particlesMesh.rotation.y += 0.0005;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Responsive Design
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Custom Cursor
+        // Custom Cursor Logic
         const cursor = document.getElementById('cursor');
         const cursorBlur = document.getElementById('cursor-blur');
 
@@ -601,34 +472,81 @@
             cursorBlur.style.top = e.clientY + 'px';
         });
 
-        // Cursor Hover Effects
-        const hoverElements = document.querySelectorAll('a, button');
-        hoverElements.forEach((el) => {
-            el.addEventListener('mouseover', () => {
-                cursor.style.backgroundColor = 'var(--accent-color)';
-                cursorBlur.style.transform = 'scale(2)';
-                cursorBlur.style.backgroundColor = 'rgba(0, 255, 153, 0.2)';
-            });
-            el.addEventListener('mouseout', () => {
-                cursor.style.backgroundColor = 'transparent';
-                cursorBlur.style.transform = 'scale(1)';
-                cursorBlur.style.backgroundColor = 'rgba(0, 255, 153, 0.1)';
-            });
-        });
-
-        // Mobile Menu Toggle
+        // Navigation Toggle for Mobile
         const menuToggle = document.querySelector('.menu-toggle');
-        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileNav = document.querySelector('.mobile-nav');
 
         menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-            menuToggle.classList.toggle('open');
+            mobileNav.classList.toggle('open');
         });
 
-        function closeMenu() {
-            mobileMenu.classList.remove('open');
-            menuToggle.classList.remove('open');
+        // Close mobile nav on link click
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+            });
+        });
+
+        // Three.js Setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(
+            75,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+        );
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 10000;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
         }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.02,
+            color: 0x64ffda,
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 5;
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.y += 0.0005;
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Responsive Canvas
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Parallax Effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+            gsap.to(scene.rotation, {
+                y: mouseX * 0.5,
+                x: -mouseY * 0.5,
+                duration: 1,
+            });
+        });
     </script>
 </body>
 </html>
