@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags and Title -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rostin Maafi - Developer Portfolio</title>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <!-- Custom Styles -->
+    <style>
+        /* Root Variables for Theming */
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --accent-color: #00ff99;
+            --secondary-bg: #1a1a1a;
+        }
+
+        /* Global Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            cursor: none;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: background-color 0.2s ease;
+        }
+
+        #cursor-blur {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0, 255, 153, 0.1);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        /* Canvas Container */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Header Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding-left: 10%;
+            position: relative;
+        }
+
+        header .content {
+            max-width: 600px;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        header .highlight {
+            color: var(--accent-color);
+        }
+
+        header .subtitle {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            color: #aaaaaa;
+        }
+
+        header .cta-button {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: none;
+            margin-top: 2rem;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        header .cta-button:hover {
+            transform: scale(1.05);
+            background-color: #00cc7a;
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 2rem;
+        }
+
+        .section:nth-child(even) {
+            background-color: var(--secondary-bg);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+            left: 0;
+            bottom: -10px;
+        }
+
+        .skills-grid, .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Skill Item */
+        .skill-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 153, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 153, 0.2);
+        }
+
+        .skill-item:hover::before {
+            top: 0;
+            left: 0;
+        }
+
+        /* Project Card */
+        .project-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 153, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 153, 0.2);
+        }
+
+        .project-card:hover::before {
+            top: 0;
+            left: 0;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background-color: #004a7c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            color: var(--accent-color);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 153, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover .project-image::after {
+            top: 0;
+            left: 0;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .project-description {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: #cccccc;
+        }
+
+        .project-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: #00cc7a;
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #1a1a1a;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .contact-form button {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            transform: scale(1.05);
+            background-color: #00cc7a;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-bg);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: #aaaaaa;
+            font-size: 0.9rem;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            header {
+                padding-left: 2rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            nav .menu-toggle {
+                display: block;
+                cursor: pointer;
+            }
+
+            nav .menu-toggle div {
+                width: 25px;
+                height: 3px;
+                background-color: var(--text-color);
+                margin: 5px 0;
+                transition: all 0.3s ease;
+            }
+
+            /* Mobile Menu */
+            .mobile-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100%;
+                background-color: var(--bg-color);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: right 0.3s ease;
+                z-index: 999;
+            }
+
+            .mobile-menu ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                text-align: center;
+            }
+
+            .mobile-menu ul li {
+                margin: 1.5rem 0;
+            }
+
+            .mobile-menu ul li a {
+                color: var(--text-color);
+                font-size: 1.5rem;
+                text-decoration: none;
+            }
+
+            .mobile-menu.open {
+                right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor Elements -->
+    <div id="cursor"></div>
+    <div id="cursor-blur"></div>
+
+    <!-- Background Animation -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#" class="logo">RM</a>
+        <div class="menu-toggle">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="#about" onclick="closeMenu()">About</a></li>
+            <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+            <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
+            <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="content" data-aos="fade-right">
+            <h1>Hi, I'm <span class="highlight">Rostin Maafi</span></h1>
+            <p class="subtitle">Computer Science Student & Aspiring Developer</p>
+            <a href="#projects" class="cta-button">Explore My Work</a>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container" data-aos="fade-up">
+            <h2>About Me</h2>
+            <p>I'm a passionate computer science student at Queen's University, constantly exploring new technologies and pushing the boundaries of what's possible in the digital realm. With a keen interest in AI, machine learning, and web development, I'm always eager to take on new challenges and create innovative solutions.</p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+        <div class="container" data-aos="fade-up">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-item" data-aos="flip-left">Python</div>
+                <div class="skill-item" data-aos="flip-right">Java</div>
+                <div class="skill-item" data-aos="flip-left">C++</div>
+                <div class="skill-item" data-aos="flip-right">JavaScript</div>
+                <div class="skill-item" data-aos="flip-left">React</div>
+                <div class="skill-item" data-aos="flip-right">Node.js</div>
+                <div class="skill-item" data-aos="flip-left">SQL</div>
+                <div class="skill-item" data-aos="flip-right">Git</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <div class="container" data-aos="fade-up">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card" data-aos="zoom-in">
+                    <div class="project-image" style="background-image: url('your-image-url1.jpg');"></div>
+                    <h3 class="project-title">AI Chatbot</h3>
+                    <p class="project-description">An intelligent chatbot powered by machine learning algorithms.</p>
+                    <a href="#" class="project-link">Learn More</a>
+                </div>
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="project-image" style="background-image: url('your-image-url2.jpg');"></div>
+                    <h3 class="project-title">E-commerce Platform</h3>
+                    <p class="project-description">A full-stack web application for online shopping experiences.</p>
+                    <a href="#" class="project-link">Learn More</a>
+                </div>
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="project-image" style="background-image: url('your-image-url3.jpg');"></div>
+                    <h3 class="project-title">Mobile Fitness Tracker</h3>
+                    <p class="project-description">An iOS app for tracking workouts and health metrics.</p>
+                    <a href="#" class="project-link">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container" data-aos="fade-up">
+            <h2>Contact Me</h2>
+            <p>If you're interested in collaborating or just want to say hi, feel free to drop a message!</p>
+            <div class="contact-form">
+                <form action="https://formspree.io/f/your-form-id" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required />
+                    <input type="email" name="_replyto" placeholder="Your Email" required />
+                    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Rostin Maafi. All rights reserved.</p>
+    </footer>
+
+    <!-- External Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    <!-- Custom Scripts -->
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+        // Three.js Background Animation
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Create Particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCnt = 20000;
+        const posArray = new Float32Array(particlesCnt * 3);
+        for (let i = 0; i < particlesCnt * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 100;
+        }
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.1,
+            color: 0x00ff99,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            opacity: 0.5,
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 30;
+
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            particlesMesh.rotation.x += 0.0005;
+            particlesMesh.rotation.y += 0.0005;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive Design
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const cursorBlur = document.getElementById('cursor-blur');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorBlur.style.left = e.clientX + 'px';
+            cursorBlur.style.top = e.clientY + 'px';
+        });
+
+        // Cursor Hover Effects
+        const hoverElements = document.querySelectorAll('a, button');
+        hoverElements.forEach((el) => {
+            el.addEventListener('mouseover', () => {
+                cursor.style.backgroundColor = 'var(--accent-color)';
+                cursorBlur.style.transform = 'scale(2)';
+                cursorBlur.style.backgroundColor = 'rgba(0, 255, 153, 0.2)';
+            });
+            el.addEventListener('mouseout', () => {
+                cursor.style.backgroundColor = 'transparent';
+                cursorBlur.style.transform = 'scale(1)';
+                cursorBlur.style.backgroundColor = 'rgba(0, 255, 153, 0.1)';
+            });
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            menuToggle.classList.toggle('open');
+        });
+
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            menuToggle.classList.remove('open');
+        }
+    </script>
+</body>
+</html>
