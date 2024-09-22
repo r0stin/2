@@ -1,42 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Rostin Maafi - Portfolio</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghokas Media - Portfolio & Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100">
+    <header class="bg-white shadow-md">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-gray-800">Ghokas Media</a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#services" class="text-gray-600 hover:text-gray-800">Services</a>
+                    <a href="#portfolio" class="text-gray-600 hover:text-gray-800">Portfolio</a>
+                    <a href="#contact" class="text-gray-600 hover:text-gray-800">Contact</a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <h1 style="text-align:center;">Rostin Maafi</h1>
-    <h2 style="text-align:center;">Computer Science Student at Queen's University</h2>
+    <main>
+        <section id="hero" class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">Welcome to Ghokas Media</h1>
+                <p class="text-xl mb-8">Elevate Your Brand with Expert Digital Marketing Solutions</p>
+                <a href="#contact" class="bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
+            </div>
+        </section>
 
-    <hr>
+        <section id="services" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">Our Services</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                        <h3 class="text-xl font-semibold mb-4">Social Media Management</h3>
+                        <p class="text-gray-600">Comprehensive management across all major platforms to boost your online presence.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                        <h3 class="text-xl font-semibold mb-4">Content Creation</h3>
+                        <p class="text-gray-600">Engaging and high-quality content tailored to your brand and audience.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                        <h3 class="text-xl font-semibold mb-4">Advertisement Campaigns</h3>
+                        <p class="text-gray-600">Strategic ad campaigns to maximize your reach and ROI.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                        <h3 class="text-xl font-semibold mb-4">Influencer Marketing</h3>
+                        <p class="text-gray-600">Connect with the right influencers to amplify your brand message.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section>
-        <h2>About Me</h2>
-        <p>Hello! I'm Rostin, a computer science student at Queen's University with a passion for technology and innovation.</p>
-    </section>
+        <section id="portfolio" class="bg-gray-200 py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">Portfolio</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                        <img src="/api/placeholder/400/300" alt="Portfolio item 1" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-semibold mb-2">Project Title 1</h3>
+                            <p class="text-gray-600">Brief description of the project and its impact.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                        <img src="/api/placeholder/400/300" alt="Portfolio item 2" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-semibold mb-2">Project Title 2</h3>
+                            <p class="text-gray-600">Brief description of the project and its impact.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                        <img src="/api/placeholder/400/300" alt="Portfolio item 3" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-semibold mb-2">Project Title 3</h3>
+                            <p class="text-gray-600">Brief description of the project and its impact.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <hr>
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">Get in Touch</h2>
+                <div class="max-w-md mx-auto">
+                    <form>
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 font-semibold mb-2">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-indigo-700 transition duration-300">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <section>
-        <h2>Projects</h2>
-        <!-- Placeholder for 3D models -->
-        <div style="text-align:center;">
-            <object data="model1.obj" type="text/plain" width="300" height="300">
-                Your browser does not support viewing 3D models.
-            </object>
-            <object data="model2.obj" type="text/plain" width="300" height="300">
-                Your browser does not support viewing 3D models.
-            </object>
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Ghokas Media. All rights reserved.</p>
         </div>
-    </section>
-
-    <hr>
-
-    <section>
-        <h2>Contact</h2>
-        <p>Email: <a href="mailto:rostin.maafi@example.com">rostin.maafi@example.com</a></p>
-    </section>
-
+    </footer>
 </body>
 </html>
