@@ -3,119 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghokas Media - Portfolio & Services</title>
+    <title>Rostin Maafi | Credit Solutions & Private Lending</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        body {
-            font-family: 'Poppins', sans-serif;
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0b; color: #e5e7eb; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .gold-gradient {
+            background: linear-gradient(90deg, #d4af37 0%, #f9e29c 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+        .btn-gold {
+            background: linear-gradient(90deg, #d4af37 0%, #f9e29c 100%);
+            transition: transform 0.2s ease;
+        }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
+        .card-blur { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 </head>
-<body class="bg-gray-100">
-    <header class="bg-white shadow-md">
-        <nav class="container mx-auto px-6 py-3">
-            <div class="flex justify-between items-center">
-                <a href="#" class="text-2xl font-bold text-gray-800">Ghokas Media</a>
-                <div class="hidden md:flex space-x-6">
-                    <a href="#services" class="text-gray-600 hover:text-gray-800">Services</a>
-                    <a href="#portfolio" class="text-gray-600 hover:text-gray-800">Portfolio</a>
-                    <a href="#contact" class="text-gray-600 hover:text-gray-800">Contact</a>
-                </div>
+<body>
+
+    <nav class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+        <div class="text-2xl font-bold tracking-tighter uppercase gold-gradient">Rostin Maafi</div>
+        <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-light">
+            <a href="#services" class="hover:text-yellow-500 transition">Services</a>
+            <a href="#about" class="hover:text-yellow-500 transition">Strategy</a>
+            <a href="#contact" class="hover:text-yellow-500 transition">Contact</a>
+        </div>
+        <a href="#contact" class="btn-gold text-black px-6 py-2 rounded-full text-xs font-bold uppercase">Inquire Now</a>
+    </nav>
+
+    <header class="relative h-[80vh] flex items-center justify-center text-center px-4">
+        <div class="z-10 max-w-4xl">
+            <h1 class="text-5xl md:text-7xl mb-6">Strategic Capital. <br><span class="gold-gradient">Absolute Discretion.</span></h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                Rostin Maafi provides bespoke private lending solutions and credit consultancy for high-stakes opportunities when traditional banking is too slow.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#contact" class="btn-gold text-black px-10 py-4 rounded-sm font-bold uppercase tracking-widest text-sm">Secure Funding</a>
+                <a href="#services" class="border border-gray-700 hover:bg-white hover:text-black transition px-10 py-4 rounded-sm font-bold uppercase tracking-widest text-sm">View Solutions</a>
             </div>
-        </nav>
+        </div>
     </header>
 
-    <main>
-        <section id="hero" class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-20">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Welcome to Ghokas Media</h1>
-                <p class="text-xl mb-8">Elevate Your Brand with Expert Digital Marketing Solutions</p>
-                <a href="#contact" class="bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-            </div>
-        </section>
+    <section class="border-y border-gray-900 py-12 bg-black">
+        <div class="max-w-7xl mx-auto px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div><p class="text-3xl font-bold gold-gradient">$100K+</p><p class="text-xs uppercase tracking-tighter text-gray-500">Capital Deployed</p></div>
+            <div><p class="text-3xl font-bold gold-gradient">48hrs</p><p class="text-xs uppercase tracking-tighter text-gray-500">Average Turnaround</p></div>
+            <div><p class="text-3xl font-bold gold-gradient">100%</p><p class="text-xs uppercase tracking-tighter text-gray-500">Confidentiality</p></div>
+            <div><p class="text-3xl font-bold gold-gradient">Private</p><p class="text-xs uppercase tracking-tighter text-gray-500">Funding Network</p></div>
+        </div>
+    </section>
 
-        <section id="services" class="py-20">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">Our Services</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-                        <h3 class="text-xl font-semibold mb-4">Social Media Management</h3>
-                        <p class="text-gray-600">Comprehensive management across all major platforms to boost your online presence.</p>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-                        <h3 class="text-xl font-semibold mb-4">Content Creation</h3>
-                        <p class="text-gray-600">Engaging and high-quality content tailored to your brand and audience.</p>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-                        <h3 class="text-xl font-semibold mb-4">Advertisement Campaigns</h3>
-                        <p class="text-gray-600">Strategic ad campaigns to maximize your reach and ROI.</p>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-                        <h3 class="text-xl font-semibold mb-4">Influencer Marketing</h3>
-                        <p class="text-gray-600">Connect with the right influencers to amplify your brand message.</p>
-                    </div>
+    <section id="services" class="py-24 px-8 max-w-7xl mx-auto">
+        <h2 class="text-3xl mb-16 text-center italic">Institutional Expertise. Private Execution.</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="card-blur p-10 hover:border-yellow-900 transition">
+                <h3 class="text-xl mb-4 gold-gradient">Bridge Financing</h3>
+                <p class="text-gray-400 font-light text-sm leading-loose">Immediate liquidity for time-sensitive acquisitions or operational gaps. We fund the opportunities banks ignore.</p>
+            </div>
+            <div class="card-blur p-10 hover:border-yellow-900 transition">
+                <h3 class="text-xl mb-4 gold-gradient">Asset-Based Loans</h3>
+                <p class="text-gray-400 font-light text-sm leading-loose">Unlock value from your equity or real estate. High-LTV private loans with flexible repayment structures.</p>
+            </div>
+            <div class="card-blur p-10 hover:border-yellow-900 transition">
+                <h3 class="text-xl mb-4 gold-gradient">Credit Advisory</h3>
+                <p class="text-gray-400 font-light text-sm leading-loose">Strategic consulting to restructure and optimize credit profiles for long-term institutional stability.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 bg-[#0d0d0f]">
+        <div class="max-w-3xl mx-auto px-8 text-center">
+            <h2 class="text-4xl mb-6">Request a Private Consultation</h2>
+            <p class="text-gray-500 mb-12">Submit your requirements. Our underwriting team reviews all inquiries within 24 hours.</p>
+            <form class="space-y-4">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="Full Name" class="w-full bg-black border border-gray-800 p-4 focus:outline-none focus:border-yellow-600 transition">
+                    <input type="email" placeholder="Email Address" class="w-full bg-black border border-gray-800 p-4 focus:outline-none focus:border-yellow-600 transition">
                 </div>
-            </div>
-        </section>
+                <input type="text" placeholder="Loan Amount Requested" class="w-full bg-black border border-gray-800 p-4 focus:outline-none focus:border-yellow-600 transition">
+                <textarea placeholder="Brief Purpose of Funding" rows="4" class="w-full bg-black border border-gray-800 p-4 focus:outline-none focus:border-yellow-600 transition"></textarea>
+                <button type="submit" class="btn-gold w-full text-black font-bold py-4 uppercase tracking-widest">Submit Application</button>
+            </form>
+        </div>
+    </section>
 
-        <section id="portfolio" class="bg-gray-200 py-20">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">Portfolio</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                        <img src="/api/placeholder/400/300" alt="Portfolio item 1" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-semibold mb-2">Project Title 1</h3>
-                            <p class="text-gray-600">Brief description of the project and its impact.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                        <img src="/api/placeholder/400/300" alt="Portfolio item 2" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-semibold mb-2">Project Title 2</h3>
-                            <p class="text-gray-600">Brief description of the project and its impact.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                        <img src="/api/placeholder/400/300" alt="Portfolio item 3" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-semibold mb-2">Project Title 3</h3>
-                            <p class="text-gray-600">Brief description of the project and its impact.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-20">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">Get in Touch</h2>
-                <div class="max-w-md mx-auto">
-                    <form>
-                        <div class="mb-4">
-                            <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
-                            <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
-                            <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="message" class="block text-gray-700 font-semibold mb-2">Message</label>
-                            <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" required></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-indigo-700 transition duration-300">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2024 Ghokas Media. All rights reserved.</p>
+    <footer class="py-12 border-t border-gray-900 text-center px-8">
+        <p class="text-2xl font-bold gold-gradient mb-4">ROSTIN MAAFI</p>
+        <p class="text-gray-600 text-[10px] uppercase tracking-[0.2em] mb-8">Credit Solutions | Private Capital | Strategic Advisory</p>
+        <div class="text-gray-500 text-[10px] leading-relaxed max-w-2xl mx-auto">
+            DISCLAIMER: Rostin Maafi is a private consultancy. All funding is subject to due diligence and compliance with federal lending regulations. This is not an offer for securities. 
+            <br>&copy; 2026 Rostin Maafi. All Rights Reserved.
         </div>
     </footer>
+
 </body>
 </html>
